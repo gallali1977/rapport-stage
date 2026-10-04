@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>Mon rapport de stage – 1re STMG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout : carnet de travail en onglets (Démarrer → J1 → J2 → J3 → Oral → Ressources → Évaluation), colonne de lecture ~760px */
+:root{
+  --bg:#f3f5fa; --surface:#ffffff; --ink:#17213b; --muted:#56607c; --line:#d8dde9;
+  --accent:#2a48c9; --accent-soft:#e6ebfb; --mark:#ffd84d; --mark-ink:#17213b;
+  --ok:#1d7f54; --ok-soft:#e1f3ea; --warn:#a4501a; --warn-soft:#fbeadf;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible",Verdana,"Segoe UI",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0f1426; --surface:#171f37; --ink:#e8ecf7; --muted:#9ba5c2; --line:#2b3658;
+  --accent:#93a8ff; --accent-soft:#1f2a4d; --mark:#e7c03a; --mark-ink:#17213b;
+  --ok:#5ccf98; --ok-soft:#173528; --warn:#f0a070; --warn-soft:#3a2416; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0f1426; --surface:#171f37; --ink:#e8ecf7; --muted:#9ba5c2; --line:#2b3658;
+  --accent:#93a8ff; --accent-soft:#1f2a4d; --mark:#e7c03a; --mark-ink:#17213b;
+  --ok:#5ccf98; --ok-soft:#173528; --warn:#f0a070; --warn-soft:#3a2416; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:780px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(1.7rem,5vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.5rem;font-weight:800}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mk{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit;padding:0 .1em}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-lg{display:flex;flex-direction:column;gap:28px}
+
+/* header */
+header.top{padding-block:28px 18px;display:flex;flex-direction:column;gap:10px}
+header.top .lede{color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.fact{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:.88rem}
+.fact b{font-variant-numeric:tabular-nums}
+
+/* track switch */
+.track{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
+.track span{font-size:.9rem;color:var(--muted);margin-right:4px}
+.track label{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:700;font-size:.95rem}
+.track input{accent-color:var(--accent)}
+.track label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+body[data-track="stage"] .only-rech{display:none!important}
+body[data-track="rech"] .only-stage{display:none!important}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-inline:-16px;padding:8px 16px;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap;scrollbar-width:thin}
+nav.tabs .in{max-width:780px;margin:0 auto;display:flex;gap:6px}
+nav.tabs button{font:600 .95rem var(--f-display);color:var(--muted);background:transparent;border:1.5px solid transparent;border-radius:8px;padding:7px 12px;cursor:pointer;flex:0 0 auto}
+nav.tabs button[aria-selected="true"]{color:var(--ink);background:var(--surface);border-color:var(--line)}
+nav.tabs button:focus-visible,button:focus-visible,label:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+nav.tabs .pct{font:400 .75rem var(--f-body);font-variant-numeric:tabular-nums;color:var(--ok);margin-left:4px}
+
+section.panel{padding-top:26px}
+.panel-head{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.panel-head .meta{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--muted);font-size:.92rem}
+.panel-head .goal{font-size:1.05rem}
+
+/* task card */
+.task{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px}
+.task-h{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.task-n{font:800 .85rem var(--f-display);color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px;font-variant-numeric:tabular-nums}
+.task-h h3{flex:1 1 220px;min-width:0}
+.dur{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.task ul,.task ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.sub{font:700 .78rem var(--f-display);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.tip{font-size:.92rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px}
+.attendus{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--line);padding-top:12px}
+.chk{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:.96rem}
+.chk input{margin-top:.3em;width:18px;height:18px;flex:0 0 auto;accent-color:var(--ok)}
+.chk:has(input:checked) span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--ok)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:600 .82rem var(--f-display);letter-spacing:.03em;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:700;white-space:nowrap}
+
+/* depot */
+.depot{background:var(--mark);color:var(--mark-ink);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px}
+.depot h3{font-size:1.15rem}
+.depot ul{margin:0;padding-left:1.2em}
+.depot code{background:rgba(255,255,255,.55);border-radius:4px;padding:1px 6px;font-size:.9rem;word-break:break-all}
+
+.note{background:var(--accent-soft);border-radius:var(--r);padding:14px 16px;font-size:.95rem}
+.warn{background:var(--warn-soft);border-radius:var(--r);padding:14px 16px;font-size:.95rem}
+.warn b{color:var(--warn)}
+
+/* recto verso sheets */
+.sheets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.sheet{aspect-ratio:210/297;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8%;display:flex;flex-direction:column;gap:5px;box-shadow:0 2px 0 var(--line)}
+.sheet .lab{font:800 .72rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center}
+.blk{border:1.5px solid var(--accent);border-radius:3px;padding:4px 6px;font-size:clamp(.6rem,1.9vw,.8rem);line-height:1.25;display:flex;flex-direction:column;justify-content:center}
+.blk b{font-family:var(--f-display)}
+.blk small{color:var(--muted)}
+.blk.hd{border-style:dashed;flex:0 0 auto}
+.blk.src{border-style:dotted;flex:0 0 auto}
+
+/* buttons */
+.btn{font:700 .95rem var(--f-body);border-radius:8px;border:1.5px solid var(--accent);background:var(--accent);color:var(--surface);padding:9px 16px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.copied{font-size:.9rem;color:var(--ok)}
+pre.trame{white-space:pre-wrap;font:400 .85rem/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin:0;max-height:300px;overflow:auto}
+
+/* timer */
+.timer{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
+.clock{font:800 clamp(2.4rem,10vw,3.6rem) var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.phase-now{font-weight:700}
+.bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--line);position:relative}
+.bar i{display:block;height:100%;border-right:2px solid var(--surface)}
+.bar i:nth-child(odd){background:var(--accent-soft)} .bar i:nth-child(even){background:var(--line)}
+.bar .fill{position:absolute;inset:0 auto 0 0;background:var(--accent);opacity:.85;width:0;border:0}
+.phases{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.phases .t{font-variant-numeric:tabular-nums;color:var(--muted)}
+.phases .on{font-weight:700;color:var(--ink)}
+
+/* resources */
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
+.res .task ul{list-style:none;padding:0;gap:8px}
+.res li span{display:block;font-size:.88rem;color:var(--muted)}
+dl.lex{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:8px 14px;margin:0;font-size:.94rem}
+dl.lex dt{font-weight:700}
+dl.lex dd{margin:0}
+@media (max-width:520px){dl.lex{grid-template-columns:1fr} dl.lex dd{margin-bottom:6px}}
+
+/* grids */
+.grid-eval td{min-width:120px}
+.grid-eval td.crit{min-width:180px}
+.lvl{display:flex;gap:6px;align-items:flex-start;cursor:pointer}
+.lvl input{accent-color:var(--accent);margin-top:.25em}
+.score{display:flex;gap:10px;flex-wrap:wrap}
+.score .s{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.score .s b{font:800 1.6rem var(--f-display);font-variant-numeric:tabular-nums}
+.qs{counter-reset:q;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.qs li{counter-increment:q;padding-left:2.2em;position:relative}
+.qs li::before{content:counter(q);position:absolute;left:0;font:800 .85rem var(--f-display);color:var(--accent);width:1.7em;text-align:right}
+
+@media (max-width:520px){ .task{padding:14px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">Lycée de l'Essouriau · 1re STMG · Sciences de gestion et numérique</p>
+  <h1>Mon rapport de stage et mon oral</h1>
+  <p class="lede">Pendant 3 jours, tu vas rédiger un rapport d'une feuille A4 recto-verso sur ton stage de fin de seconde et préparer un oral de 10 minutes. Chaque jour a ses tâches, ses attendus et un dépôt à faire le soir.</p>
+  <div class="facts">
+    <span class="fact"><b>3</b> jours</span>
+    <span class="fact"><b>3 h 30</b> à <b>4 h</b> par jour</span>
+    <span class="fact"><b>1</b> dépôt chaque jour</span>
+    <span class="fact">Rapport <b>/5</b> · Oral <b>/15</b></span>
+  </div>
+  <div class="track" role="radiogroup" aria-label="Mon parcours">
+    <span>Mon parcours :</span>
+    <label><input type="radio" name="track" id="tr-stage" value="stage" checked> J'ai fait mon stage</label>
+    <label><input type="radio" name="track" id="tr-rech" value="rech"> Je n'ai pas fait de stage</label>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Étapes">
+  <div class="in" role="tablist">
+    <button role="tab" data-tab="demarrer" aria-selected="true">Démarrer</button>
+    <button role="tab" data-tab="j1">Jour 1<span class="pct" data-pct="j1"></span></button>
+    <button role="tab" data-tab="j2">Jour 2<span class="pct" data-pct="j2"></span></button>
+    <button role="tab" data-tab="j3">Jour 3<span class="pct" data-pct="j3"></span></button>
+    <button role="tab" data-tab="oral">L'oral</button>
+    <button role="tab" data-tab="ressources">Ressources</button>
+    <button role="tab" data-tab="evaluation">Évaluation</button>
+  </div>
+</nav>
+
+<!-- ========== DÉMARRER ========== -->
+<section class="panel" id="demarrer" role="tabpanel">
+  <div class="stack-lg">
+    <div class="panel-head">
+      <p class="eyebrow">Avant de commencer · 15 minutes</p>
+      <h2>Comment ça marche</h2>
+    </div>
+
+    <div class="stack">
+      <h3>Le résultat attendu à la fin des 3 jours</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th>Production</th><th>Format</th><th>Note</th></tr>
+        <tr><td class="k">Rapport</td><td>1 feuille A4 recto-verso, tapée à l'ordinateur ou sur téléphone, rendue en PDF</td><td>/5</td></tr>
+        <tr><td class="k">Oral</td><td>10 minutes : 5 minutes d'exposé sans aucun support, puis 5 minutes d'échange avec le jury</td><td>/15</td></tr>
+      </table></div>
+    </div>
+
+    <div class="stack">
+      <h3>Choisis ton parcours en haut de la page</h3>
+      <p>La page s'adapte à ta situation. Les tâches sont les mêmes, seules les consignes changent.</p>
+      <div class="tbl-wrap"><table>
+        <tr><th>J'ai fait mon stage</th><th>Je n'ai pas fait de stage</th></tr>
+        <tr><td>Tu racontes et analyses ce que tu as vécu dans l'organisation qui t'a accueilli.</td><td>Tu choisis librement une entreprise, tu mènes une enquête à partir de sources fiables et tu rédiges le même rapport.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="stack">
+      <h3>Le programme</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th>Jour</th><th>Objectif</th><th>Dépôt du soir</th></tr>
+        <tr><td class="k">Jour 1</td><td>Rassembler les informations et comprendre l'organisation</td><td>Carte d'identité, fonctionnement, journal</td></tr>
+        <tr><td class="k">Jour 2</td><td>Rédiger le rapport recto-verso</td><td>Rapport version 1</td></tr>
+        <tr><td class="k">Jour 3</td><td>Finaliser le rapport et préparer l'oral</td><td>Rapport final + plan d'oral + enregistrement</td></tr>
+      </table></div>
+    </div>
+
+    <div class="warn">
+      <p><b>Règle n° 1 : pas d'intelligence artificielle.</b> ChatGPT, Gemini, Copilot ou tout autre outil qui écrit à ta place sont interdits. Le correcteur d'orthographe de ton traitement de texte est autorisé. À l'oral, le jury te posera des questions précises sur ton rapport : tu dois pouvoir expliquer chaque phrase avec tes propres mots. Un texte que tu ne sais pas expliquer te coûtera des points.</p>
+    </div>
+
+    <div class="stack">
+      <h3>Nommer tes fichiers</h3>
+      <p>Chaque dépôt suit le même modèle, pour que ton professeur retrouve ton travail :</p>
+      <p><code>NOM_Prenom_1STMGx_J1</code>, puis <code>_J2</code>, puis <code>_J3</code></p>
+    </div>
+
+    <div class="attendus">
+      <p class="sub">Pour démarrer</p>
+      <label class="chk"><input type="checkbox" data-key="d-1"><span>J'ai choisi mon parcours en haut de la page.</span></label>
+      <label class="chk"><input type="checkbox" data-key="d-2"><span>J'ai lu les 3 journées en entier avant de commencer.</span></label>
+      <label class="chk"><input type="checkbox" data-key="d-3"><span>J'ai un traitement de texte qui fonctionne (Word, LibreOffice, Google Docs ou l'appli de mon téléphone).</span></label>
+      <label class="chk"><input type="checkbox" data-key="d-4"><span>Je sais où et avant quelle heure déposer mon travail chaque soir.</span></label>
+    </div>
+    <p class="tip">Les cases que tu coches sont gardées sur ton appareil, pour suivre ta progression. Elles ne sont pas envoyées à ton professeur : seul le dépôt compte.</p>
+  </div>
+</section>
+
+<!-- ========== JOUR 1 ========== -->
+<section class="panel" id="j1" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Jour 1 · environ 3 h 30</p>
+    <h2>Comprendre l'organisation</h2>
+    <p class="goal">Objectif : rassembler toutes les informations utiles et comprendre qui est l'organisation, ce qu'elle fait et comment elle fonctionne.</p>
+  </div>
+  <div class="stack">
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">1.1</span><h3 class="only-stage">Rassembler tes traces de stage</h3><h3 class="only-rech">Choisir ton entreprise</h3><span class="dur">20 min</span></div>
+      <div class="only-stage stack">
+        <p>Retrouve tout ce qui peut t'aider à te souvenir de ton stage :</p>
+        <ul>
+          <li>ta convention de stage (nom exact, adresse, nom et fonction du tuteur, dates) ;</li>
+          <li>tes notes, ton carnet de bord ou tes messages de l'époque ;</li>
+          <li>tes photos (sans visages, sauf accord des personnes) et les documents qu'on t'a donnés ;</li>
+          <li>le site internet et les réseaux sociaux de l'organisation.</li>
+        </ul>
+        <p class="tip">Tu peux recontacter ton tuteur par mail pour vérifier une information. C'est apprécié et cela montre ton sérieux.</p>
+      </div>
+      <div class="only-rech stack">
+        <p>Tu choisis librement l'entreprise ou l'organisation que tu vas étudier. Vérifie trois choses avant de te lancer :</p>
+        <ul>
+          <li><b>Elle existe vraiment</b> et tu trouves son numéro SIREN sur l'Annuaire des entreprises (voir Ressources).</li>
+          <li><b>Il y a assez d'informations</b> : un site internet, des articles, des avis clients, une page LinkedIn.</li>
+          <li><b>Elle te parle</b> : un secteur ou un métier qui t'intéresse pour ton orientation.</li>
+        </ul>
+        <p class="tip">Une entreprise près de chez toi (commerce, garage, agence, cabinet) ou une enseigne connue (Decathlon, La Poste, une banque…) conviennent toutes les deux. Une petite entreprise locale est plus originale, mais vérifie qu'on trouve des informations dessus.</p>
+      </div>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk only-stage"><input type="checkbox" data-key="j1-1a"><span>J'ai le nom exact de l'organisation, son adresse, le nom et la fonction de mon tuteur, les dates de mon stage.</span></label>
+        <label class="chk only-rech"><input type="checkbox" data-key="j1-1b"><span>J'ai choisi mon entreprise et je connais son numéro SIREN.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j1-1c"><span>J'ai ouvert un document nommé <code>NOM_Prenom_1STMGx_J1</code>.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">1.2</span><h3>Établir la carte d'identité de l'organisation</h3><span class="dur">1 h 15</span></div>
+      <p>Recopie ce tableau dans ton document et complète chaque ligne. Indique la source de chaque information.</p>
+      <div class="tbl-wrap"><table>
+        <tr><th>Rubrique</th><th>Ce que tu dois trouver</th></tr>
+        <tr><td class="k">Nom et logo</td><td>Raison sociale (nom officiel) et nom commercial s'il est différent</td></tr>
+        <tr><td class="k">Création</td><td>Année de création, fondateur si connu</td></tr>
+        <tr><td class="k">Adresse</td><td>Lieu du stage ou du siège social, nombre d'établissements</td></tr>
+        <tr><td class="k">Statut juridique</td><td>SAS, SARL, entreprise individuelle, association, administration…</td></tr>
+        <tr><td class="k">Finalité</td><td>Faire du profit (entreprise) ou rendre un service sans but lucratif (association, organisation publique)</td></tr>
+        <tr><td class="k">Secteur d'activité</td><td>Primaire, secondaire ou tertiaire, et code APE (NAF)</td></tr>
+        <tr><td class="k">Taille</td><td>Nombre de salariés, puis catégorie : TPE, PME, ETI ou grande entreprise</td></tr>
+        <tr><td class="k">Chiffre d'affaires</td><td>Montant de la dernière année publiée, si disponible</td></tr>
+        <tr><td class="k">Zone d'action</td><td>Locale, régionale, nationale ou internationale</td></tr>
+        <tr><td class="k">Dirigeant</td><td>Nom ou fonction de la personne qui dirige</td></tr>
+      </table></div>
+      <p class="tip">Les mots de ce tableau sont expliqués dans le mini-lexique de l'onglet Ressources.</p>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j1-2a"><span>Au moins 8 rubriques sur 10 sont complétées.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j1-2b"><span>Chaque information a sa source (site, annuaire, tuteur, convention…).</span></label>
+        <label class="chk"><input type="checkbox" data-key="j1-2c"><span>Si une information est introuvable, j'ai écrit « non trouvé » au lieu d'inventer.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">1.3</span><h3>Comprendre son activité et son fonctionnement</h3><span class="dur">1 h</span></div>
+      <p>Réponds en quelques phrases à chacune de ces questions :</p>
+      <ol>
+        <li><b>Que fait-elle ?</b> Quels biens fabrique-t-elle ou vend-elle, ou quels services rend-elle ?</li>
+        <li><b>Pour qui ?</b> Qui sont ses clients ou ses usagers : particuliers, entreprises, administrations ?</li>
+        <li><b>Face à qui ?</b> Cite deux concurrents et ce qui la distingue d'eux.</li>
+        <li><b>Avec qui ?</b> Cite au moins un fournisseur ou un partenaire.</li>
+        <li><b>Comment gagne-t-elle de l'argent ?</b> Vente, abonnement, commission, prestation, cotisations, subventions…</li>
+        <li><b>Comment est-elle organisée ?</b> Dessine un organigramme simplifié : qui dirige, quels services ou équipes, combien de personnes.</li>
+      </ol>
+      <p class="tip only-stage">Pour l'organigramme, pars de ce que tu as vu : les personnes que tu as croisées et qui dépendait de qui. Un dessin à la main photographié est accepté.</p>
+      <p class="tip only-rech">Pour l'organigramme, cherche la page « Qui sommes-nous », « Notre équipe » ou les profils LinkedIn des salariés. Pour une petite entreprise, un organigramme de 3 à 5 cases suffit.</p>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j1-3a"><span>J'ai répondu aux 6 questions avec mes propres phrases.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j1-3b"><span>Mon organigramme est lisible (tapé ou dessiné et photographié).</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">1.4</span><h3 class="only-stage">Reconstituer ton journal de stage</h3><h3 class="only-rech">Tenir ton journal de recherche</h3><span class="dur">45 min</span></div>
+      <div class="only-stage stack">
+        <p>Fais la liste de <b>6 à 10 moments marquants</b> de ton stage. Pour chacun, note :</p>
+        <ul>
+          <li>le jour (même approximatif) ;</li>
+          <li>ce que tu as fait ou observé ;</li>
+          <li>avec qui (métier de la personne) ;</li>
+          <li>les outils utilisés (logiciel, caisse, machine, tableau…) ;</li>
+          <li>ce que tu en as pensé, en une phrase.</li>
+        </ul>
+        <p class="tip">Ce journal ne sera pas recopié tel quel dans le rapport. C'est ta réserve d'exemples concrets pour la rédaction et pour l'oral.</p>
+      </div>
+      <div class="only-rech stack">
+        <p>Liste <b>au moins 5 sources</b> consultées. Pour chacune, note :</p>
+        <ul>
+          <li>le titre et le lien ;</li>
+          <li>la date de publication si elle est indiquée ;</li>
+          <li>ce que tu y as appris, en une phrase.</li>
+        </ul>
+        <p>Parmi tes sources, il faut <b>au moins une vidéo ou un témoignage métier</b> (Onisep, chaîne YouTube de l'entreprise, reportage).</p>
+        <p class="tip">Fortement conseillé : contacte l'entreprise par mail ou par téléphone pour poser 2 ou 3 questions. Même une réponse courte vaut beaucoup à l'oral.</p>
+      </div>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk only-stage"><input type="checkbox" data-key="j1-4a"><span>Mon journal compte au moins 6 moments, avec personnes et outils.</span></label>
+        <label class="chk only-rech"><input type="checkbox" data-key="j1-4b"><span>Mon journal compte au moins 5 sources, dont une vidéo ou un témoignage.</span></label>
+      </div>
+    </article>
+
+    <div class="depot">
+      <p class="eyebrow" style="color:var(--mark-ink)">Dépôt du jour 1 · le soir</p>
+      <h3>Un seul fichier : <code>NOM_Prenom_1STMGx_J1</code></h3>
+      <ul>
+        <li>La carte d'identité complétée, avec les sources (tâche 1.2)</li>
+        <li>Les réponses aux 6 questions et l'organigramme (tâche 1.3)</li>
+        <li class="only-stage">Ton journal de stage (tâche 1.4)</li>
+        <li class="only-rech">Ton journal de recherche (tâche 1.4)</li>
+      </ul>
+      <p>Ce n'est pas encore le rapport : ce sont tes notes de travail. Ton professeur vérifie que tu avances.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== JOUR 2 ========== -->
+<section class="panel" id="j2" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Jour 2 · environ 4 h</p>
+    <h2>Rédiger le rapport</h2>
+    <p class="goal">Objectif : transformer tes notes du jour 1 en un rapport clair, personnel, qui tient sur une feuille A4 recto-verso.</p>
+  </div>
+  <div class="stack">
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">2.1</span><h3>Étudier un métier à la loupe</h3><span class="dur">45 min</span></div>
+      <p class="only-stage">Choisis <b>un métier</b> que tu as observé pendant ton stage : celui de ton tuteur ou d'un collègue.</p>
+      <p class="only-rech">Choisis <b>un métier</b> exercé dans ton entreprise. Appuie-toi sur sa fiche Onisep et sur un témoignage (vidéo, article, profil LinkedIn).</p>
+      <p>Complète ces rubriques :</p>
+      <ul>
+        <li>intitulé exact du métier ;</li>
+        <li>3 missions principales ;</li>
+        <li>3 compétences ou qualités nécessaires ;</li>
+        <li>les outils utilisés au quotidien ;</li>
+        <li>la ou les formations pour y accéder, du bac jusqu'au diplôme (BTS, BUT, licence, école…) ;</li>
+        <li class="only-stage">le parcours réel de la personne observée (ce qu'elle t'a raconté) ;</li>
+        <li class="only-rech">le parcours de la personne qui témoigne ;</li>
+        <li>ce qui t'attire dans ce métier, et ce qui t'attire moins.</li>
+      </ul>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j2-1a"><span>Les 7 rubriques sont complétées.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j2-1b"><span>La formation indique au moins un diplôme précis après le bac.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">2.2</span><h3>Préparer ton bilan personnel</h3><span class="dur">30 min</span></div>
+      <p>Réponds honnêtement à ces questions, au brouillon. C'est la partie la plus personnelle du rapport, et celle qui compte le plus.</p>
+      <ol class="only-stage">
+        <li>Qu'attendais-tu de ce stage avant de commencer ?</li>
+        <li>Qu'est-ce qui t'a le plus surpris, en bien ou en moins bien ?</li>
+        <li>Quelles qualités as-tu montrées ou développées (ponctualité, communication, autonomie, travail en équipe…) ? Donne un exemple pour chacune.</li>
+        <li>Qu'as-tu appris sur le monde du travail que tu ne savais pas en seconde ?</li>
+        <li>Ce stage a-t-il confirmé, modifié ou fait naître un projet d'orientation ? Pense à ton choix d'enseignement spécifique en terminale (Gestion et finance ou Mercatique) et à tes idées pour après le bac.</li>
+      </ol>
+      <ol class="only-rech">
+        <li>Pourquoi as-tu choisi cette entreprise ?</li>
+        <li>Qu'est-ce qui t'a le plus surpris en l'étudiant ?</li>
+        <li>Quelle difficulté as-tu rencontrée dans tes recherches, et comment l'as-tu surmontée ?</li>
+        <li>Te verrais-tu travailler dans cette entreprise ou dans ce métier ? Pourquoi ?</li>
+        <li>Cette enquête a-t-elle confirmé, modifié ou fait naître un projet d'orientation ? Pense à ton choix d'enseignement spécifique en terminale (Gestion et finance ou Mercatique) et à tes idées pour après le bac.</li>
+      </ol>
+      <p class="tip">Sois honnête. Un stage qui t'a déçu peut donner un excellent bilan si tu expliques ce que tu en retiens.</p>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j2-2a"><span>J'ai répondu aux 5 questions au brouillon.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j2-2b"><span>Chaque réponse s'appuie sur un exemple concret.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">2.3</span><h3>Rédiger la version 1 du rapport</h3><span class="dur">2 h</span></div>
+      <p>Voici la place de chaque partie sur ta feuille. Les tailles indiquent l'importance de chaque partie.</p>
+      <div class="sheets" aria-label="Plan du rapport sur une feuille recto-verso">
+        <div class="sheet">
+          <p class="lab">Recto</p>
+          <div class="blk hd"><b>En-tête</b><small>Prénom NOM · classe · organisation · dates · tuteur</small></div>
+          <div class="blk" style="flex:2.2"><b>1. L'organisation en bref</b><small>Carte d'identité en tableau</small></div>
+          <div class="blk" style="flex:2.6"><b>2. Ce qu'elle fait et comment elle fonctionne</b><small>Activité, clients, concurrents, modèle économique, organigramme</small></div>
+          <div class="blk" style="flex:3"><b class="only-stage">3. Ce que j'ai fait et observé</b><b class="only-rech">3. Un service à la loupe</b><small class="only-stage">Les tâches et les moments marquants</small><small class="only-rech">Comment travaille une équipe au quotidien</small></div>
+        </div>
+        <div class="sheet">
+          <p class="lab">Verso</p>
+          <div class="blk" style="flex:3"><b>4. Un métier à la loupe</b><small>Missions, compétences, formation, parcours</small></div>
+          <div class="blk" style="flex:3.2"><b>5. Ce que je retiens</b><small>3 apprentissages, avec exemples</small></div>
+          <div class="blk" style="flex:2"><b>6. Et pour mon orientation ?</b><small>Terminale, après le bac</small></div>
+          <div class="blk src"><b>Sources</b><small>Liens et contacts utilisés</small></div>
+        </div>
+      </div>
+      <p class="sub">Règles de mise en forme</p>
+      <ul>
+        <li>Une feuille A4 recto-verso, pas plus.</li>
+        <li>Police lisible (Arial, Calibri ou équivalent) en taille 11, marges de 2 cm.</li>
+        <li>Les 6 titres numérotés apparaissent clairement.</li>
+        <li>Des phrases rédigées, pas seulement des listes de mots-clés. Le tableau de la partie 1 est l'exception.</li>
+        <li>Un visuel maximum en plus du tableau : l'organigramme, une photo ou le logo.</li>
+        <li class="only-rech">Les sources sont obligatoires en bas du verso.</li>
+        <li class="only-stage">Les sources en bas du verso : site de l'organisation, convention, tuteur…</li>
+        <li>Aucun copier-coller d'un site : tu reformules avec tes mots.</li>
+      </ul>
+      <p class="sub">La trame à copier dans ton document</p>
+      <p>Le bouton copie la trame. Colle-la dans ton traitement de texte et remplace chaque consigne par ton texte.</p>
+      <div class="row"><button class="btn" id="copy-trame" type="button">Copier la trame</button><span class="copied" id="copy-msg" aria-live="polite"></span></div>
+      <pre class="trame" id="trame" tabindex="0"></pre>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j2-3a"><span>Les 6 parties sont rédigées.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j2-3b"><span>Le tout tient sur une feuille recto-verso, en taille 11.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j2-3c"><span>La partie 5 contient au moins 3 apprentissages avec un exemple chacun.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">2.4</span><h3>Te relire avec méthode</h3><span class="dur">30 min</span></div>
+      <p>Relis ton rapport trois fois, avec un objectif différent à chaque fois :</p>
+      <ol>
+        <li><b>Le fond</b> : chaque partie répond-elle à sa consigne ? Y a-t-il des exemples concrets ?</li>
+        <li><b>La clarté</b> : lis à voix haute. Les phrases trop longues se repèrent tout de suite.</li>
+        <li><b>L'orthographe</b> : utilise le correcteur, puis vérifie les accords et les noms propres.</li>
+      </ol>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j2-4a"><span>J'ai fait les 3 relectures.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j2-4b"><span>J'ai testé ma grille d'autoévaluation (onglet Évaluation).</span></label>
+      </div>
+    </article>
+
+    <div class="depot">
+      <p class="eyebrow" style="color:var(--mark-ink)">Dépôt du jour 2 · le soir</p>
+      <h3>Un fichier : <code>NOM_Prenom_1STMGx_J2</code></h3>
+      <ul>
+        <li>Ton rapport version 1, complet, sur une feuille recto-verso</li>
+      </ul>
+      <p>Ton professeur pourra te faire un retour avant la version finale. Lis-le au début du jour 3.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== JOUR 3 ========== -->
+<section class="panel" id="j3" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Jour 3 · environ 3 h 30</p>
+    <h2>Finaliser et préparer l'oral</h2>
+    <p class="goal">Objectif : rendre un rapport définitif et être capable de parler 5 minutes sans support, puis de répondre aux questions du jury.</p>
+  </div>
+  <div class="stack">
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">3.1</span><h3>Finaliser le rapport</h3><span class="dur">45 min</span></div>
+      <ul>
+        <li>Intègre les remarques de ton professeur, s'il y en a.</li>
+        <li>Vérifie la mise en page : une feuille recto-verso, titres visibles, rien de coupé.</li>
+        <li>Enregistre-le en PDF : Fichier, puis Enregistrer sous ou Exporter, puis PDF.</li>
+      </ul>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j3-1a"><span>J'ai tenu compte des remarques reçues.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j3-1b"><span>Mon rapport final est en PDF et s'ouvre correctement.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">3.2</span><h3>Construire ton exposé de 5 minutes</h3><span class="dur">45 min</span></div>
+      <p>Ton exposé n'est pas une lecture du rapport. Tu racontes, tu choisis tes meilleurs exemples, tu dis ce que tu en penses. Suis le plan de l'onglet L'oral et écris une <b>fiche d'entraînement</b> :</p>
+      <ul>
+        <li>une phrase d'accroche rédigée en entier ;</li>
+        <li>3 à 5 mots-clés par partie, pas de phrases ;</li>
+        <li>une phrase de conclusion rédigée en entier.</li>
+      </ul>
+      <p class="tip">Cette fiche sert à t'entraîner. Le jour de l'oral, tu n'as <b>aucun support</b> : ni fiche, ni téléphone, ni rapport.</p>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j3-2a"><span>Ma fiche suit les 5 parties du plan.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j3-2b"><span>Mon accroche et ma conclusion sont rédigées et je les connais par cœur.</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">3.3</span><h3>Anticiper les questions du jury</h3><span class="dur">45 min</span></div>
+      <p>Dans l'onglet L'oral, choisis <b>6 questions</b> de la banque, dont au moins 2 qui te mettent mal à l'aise. Pour chacune, prépare une réponse en trois temps :</p>
+      <ol>
+        <li>je réponds directement en une phrase ;</li>
+        <li>je donne un exemple tiré de mon stage ou de mes recherches ;</li>
+        <li>je conclus par ce que j'en retiens.</li>
+      </ol>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j3-3a"><span>J'ai préparé 6 réponses en trois temps.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j3-3b"><span>Je sais expliquer chaque mot difficile de mon rapport (statut, chiffre d'affaires…).</span></label>
+      </div>
+    </article>
+
+    <article class="task">
+      <div class="task-h"><span class="task-n">3.4</span><h3>T'entraîner et t'enregistrer</h3><span class="dur">1 h</span></div>
+      <ol>
+        <li>Fais une première répétition avec ta fiche et le chronomètre de l'onglet L'oral.</li>
+        <li>Fais une deuxième répétition sans ta fiche.</li>
+        <li>Enregistre ta troisième répétition sans fiche, en audio ou en vidéo avec ton téléphone.</li>
+        <li>Réécoute-toi et remplis ton autoévaluation de l'oral (onglet Évaluation) : débit, hésitations, « euh », durée.</li>
+      </ol>
+      <p class="tip">Si tu peux, entraîne-toi devant quelqu'un de ta famille et demande-lui de te poser deux questions de la banque.</p>
+      <div class="attendus">
+        <p class="sub">Attendus</p>
+        <label class="chk"><input type="checkbox" data-key="j3-4a"><span>J'ai fait 3 répétitions chronométrées.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j3-4b"><span>Mon exposé dure entre 4 min 30 et 5 min.</span></label>
+        <label class="chk"><input type="checkbox" data-key="j3-4c"><span>J'ai rempli mon autoévaluation de l'oral.</span></label>
+      </div>
+    </article>
+
+    <div class="depot">
+      <p class="eyebrow" style="color:var(--mark-ink)">Dépôt du jour 3 · le soir</p>
+      <h3>Fichiers <code>NOM_Prenom_1STMGx_J3</code></h3>
+      <ul>
+        <li>Ton rapport final en PDF</li>
+        <li>Ta fiche d'entraînement (plan de l'exposé)</li>
+        <li>L'enregistrement audio ou vidéo de ton exposé, si la plateforme le permet</li>
+        <li>Ton score d'autoévaluation rapport et oral, copié depuis l'onglet Évaluation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ORAL ========== -->
+<section class="panel" id="oral" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Le jour J · 10 minutes</p>
+    <h2>L'oral</h2>
+    <p class="goal">5 minutes d'exposé sans aucun support, puis 5 minutes d'échange avec le jury. C'est un entraînement direct au Grand oral de terminale.</p>
+  </div>
+  <div class="stack-lg">
+
+    <div class="timer" aria-label="Chronomètre d'entraînement">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <p class="sub">Chronomètre d'entraînement</p>
+          <p class="clock" id="clock">0:00</p>
+          <p class="phase-now" id="phase-now">Prêt ? Lance le chrono et commence par ton accroche.</p>
+        </div>
+        <div class="row">
+          <button class="btn" id="t-start" type="button">Démarrer</button>
+          <button class="btn ghost" id="t-reset" type="button">Remettre à zéro</button>
+        </div>
+      </div>
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <div class="phases" id="phases"></div>
+    </div>
+
+    <div class="stack">
+      <h3>Les 5 minutes d'exposé</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th>Temps</th><th>Partie</th><th>Ce que tu dis</th></tr>
+        <tr><td class="k">0:00 – 0:30</td><td>Accroche et annonce</td><td>Une phrase qui donne envie d'écouter (une anecdote, un chiffre, une question), puis ton plan.</td></tr>
+        <tr><td class="k">0:30 – 1:30</td><td>L'organisation</td><td>Qui elle est, ce qu'elle fait, pour qui, et ce qui la rend particulière.</td></tr>
+        <tr><td class="k">1:30 – 3:00</td><td><span class="only-stage">Ce que j'ai vécu</span><span class="only-rech">Ce que j'ai découvert</span></td><td><span class="only-stage">Deux ou trois moments précis : ce que tu as fait, avec qui, ce que tu as compris.</span><span class="only-rech">Comment elle fonctionne au quotidien, et ce qui t'a surpris dans tes recherches.</span></td></tr>
+        <tr><td class="k">3:00 – 4:00</td><td>Un métier</td><td>Le métier choisi, ses missions et la formation pour y accéder.</td></tr>
+        <tr><td class="k">4:00 – 5:00</td><td>Bilan et orientation</td><td>Ce que tu retiens, ce que cela change pour ton projet, puis ta phrase de conclusion.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="stack">
+      <h3>Parler sans support</h3>
+      <ul>
+        <li><b>Posture</b> : debout ou assis bien droit, pieds ancrés, mains visibles et calmes.</li>
+        <li><b>Regard</b> : regarde chaque membre du jury, pas le plafond ni la table.</li>
+        <li><b>Voix</b> : parle plus lentement et plus fort que d'habitude. Un silence vaut mieux qu'un « euh ».</li>
+        <li><b>Vocabulaire</b> : évite le langage familier, utilise les mots précis de ton rapport.</li>
+        <li><b>Trou de mémoire</b> : respire et reprends à la partie suivante. Ton plan en 5 temps est ton fil conducteur.</li>
+      </ul>
+    </div>
+
+    <div class="stack">
+      <h3>Banque de questions possibles</h3>
+      <p>Le jury s'appuie sur ton rapport et sur ton exposé. Voici le type de questions auxquelles t'attendre.</p>
+      <p class="sub">Sur l'organisation</p>
+      <ol class="qs">
+        <li>Comment l'organisation gagne-t-elle de l'argent ou finance-t-elle son activité ?</li>
+        <li>Qui sont ses principaux concurrents, et qu'est-ce qui la distingue d'eux ?</li>
+        <li>Que signifie son statut juridique ? Qu'est-ce que cela change concrètement ?</li>
+        <li>Qui prend les décisions importantes dans cette organisation ?</li>
+        <li>Quelle difficulté ou quel défi rencontre-t-elle aujourd'hui ?</li>
+        <li>Quelle place le numérique occupe-t-il dans son activité ?</li>
+      </ol>
+      <p class="sub">Sur ton expérience</p>
+      <ol class="qs" start="7" style="counter-reset:q 6">
+        <li class="only-stage">Raconte-nous une situation précise qui t'a marqué.</li>
+        <li class="only-stage">Comment as-tu trouvé ce stage ?</li>
+        <li class="only-rech">Pourquoi avoir choisi cette entreprise plutôt qu'une autre ?</li>
+        <li class="only-rech">Comment as-tu vérifié que tes sources étaient fiables ?</li>
+        <li>Qu'est-ce qui t'a le plus surpris par rapport à ce que tu imaginais ?</li>
+        <li>Qu'as-tu trouvé difficile ?</li>
+        <li>Si tu recommençais, que ferais-tu différemment ?</li>
+      </ol>
+      <p class="sub">Sur le métier et ton orientation</p>
+      <ol class="qs" style="counter-reset:q 11">
+        <li>Quelles qualités faut-il pour exercer ce métier ? Penses-tu les avoir ?</li>
+        <li>Quelle formation après le bac mène à ce métier ?</li>
+        <li>Cette expérience a-t-elle confirmé ou changé ton projet ?</li>
+        <li>Quel enseignement spécifique envisages-tu en terminale, et pourquoi ?</li>
+        <li>En quoi la série STMG te prépare-t-elle à ce type d'environnement ?</li>
+      </ol>
+    </div>
+
+    <div class="attendus">
+      <p class="sub">Le jour J, je vérifie</p>
+      <label class="chk"><input type="checkbox" data-key="o-1"><span>Je connais par cœur mon accroche, mon plan et ma conclusion.</span></label>
+      <label class="chk"><input type="checkbox" data-key="o-2"><span>Je peux citer sans hésiter le nom, le statut, l'activité et la taille de l'organisation.</span></label>
+      <label class="chk"><input type="checkbox" data-key="o-3"><span>J'ai une tenue correcte et j'arrive en avance.</span></label>
+      <label class="chk"><input type="checkbox" data-key="o-4"><span>Je n'ai ni fiche ni téléphone en main.</span></label>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RESSOURCES ========== -->
+<section class="panel" id="ressources" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Sites et sources fiables</p>
+    <h2>Ressources</h2>
+    <p class="goal">Commence par ces sites. Note toujours d'où vient une information.</p>
+  </div>
+  <div class="stack-lg">
+    <div class="res">
+      <div class="task">
+        <h3>Identifier l'entreprise</h3>
+        <ul>
+          <li><a href="https://annuaire-entreprises.data.gouv.fr" target="_blank" rel="noopener">Annuaire des entreprises</a><span>Site officiel de l'État : SIREN, statut, date de création, code APE, dirigeants. Commence par ici.</span></li>
+          <li><a href="https://www.pappers.fr" target="_blank" rel="noopener">Pappers</a><span>Chiffre d'affaires, effectif, comptes publiés quand ils sont disponibles.</span></li>
+          <li><a href="https://www.societe.com" target="_blank" rel="noopener">Societe.com</a><span>Fiche d'identité, établissements, dirigeants.</span></li>
+          <li><a href="https://www.infogreffe.fr" target="_blank" rel="noopener">Infogreffe</a><span>Registre officiel des greffes des tribunaux de commerce.</span></li>
+        </ul>
+      </div>
+      <div class="task">
+        <h3>Comprendre son activité</h3>
+        <ul>
+          <li>Le site de l'entreprise<span>Pages « Qui sommes-nous », « Notre histoire », « Recrutement », « Espace presse ».</span></li>
+          <li>La page LinkedIn de l'entreprise<span>Effectif, actualités, profils et parcours des salariés.</span></li>
+          <li>Google Maps et les avis clients<span>Localisation, concurrents à proximité, ce que disent les clients.</span></li>
+          <li>La presse<span>Le Parisien (édition Essonne), Les Échos, la presse locale : recherche le nom de l'entreprise.</span></li>
+        </ul>
+      </div>
+      <div class="task">
+        <h3>Découvrir un métier et ses formations</h3>
+        <ul>
+          <li><a href="https://www.onisep.fr" target="_blank" rel="noopener">Onisep</a><span>Fiches métiers, vidéos, formations et diplômes.</span></li>
+          <li>Avenir(s), via ton ENT<span>La plateforme d'orientation de l'Onisep, avec ton profil et tes recherches.</span></li>
+          <li><a href="https://www.oriane.info" target="_blank" rel="noopener">Oriane</a><span>Métiers et formations en Île-de-France.</span></li>
+          <li><a href="https://www.francetravail.fr" target="_blank" rel="noopener">France Travail</a><span>Fiches métiers : missions, compétences, salaires, offres d'emploi.</span></li>
+        </ul>
+      </div>
+      <div class="task">
+        <h3>Situer le secteur</h3>
+        <ul>
+          <li><a href="https://www.insee.fr" target="_blank" rel="noopener">Insee</a><span>Chiffres officiels sur les entreprises et les secteurs d'activité.</span></li>
+          <li><a href="https://www.economie.gouv.fr" target="_blank" rel="noopener">economie.gouv.fr</a><span>Explications simples sur les statuts juridiques et la vie des entreprises.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Une source est fiable</b> quand on sait qui l'a écrite, quand elle a été publiée, et qu'on retrouve la même information ailleurs. Un forum ou une réponse d'IA ne sont pas des sources.</p>
+    </div>
+
+    <div class="stack">
+      <h3>Mini-lexique</h3>
+      <dl class="lex">
+        <dt>Raison sociale</dt><dd>Le nom officiel de l'entreprise, inscrit au registre.</dd>
+        <dt>SIREN</dt><dd>Numéro à 9 chiffres qui identifie chaque entreprise en France.</dd>
+        <dt>Statut juridique</dt><dd>La « forme » légale de l'organisation : entreprise individuelle, SARL, SAS, SA, association, établissement public…</dd>
+        <dt>Finalité</dt><dd>Ce que cherche l'organisation : réaliser un profit (finalité lucrative) ou rendre un service sans chercher le profit (finalité non lucrative).</dd>
+        <dt>Secteur primaire</dt><dd>Exploitation des ressources naturelles : agriculture, pêche, mines.</dd>
+        <dt>Secteur secondaire</dt><dd>Transformation : industrie, BTP, artisanat de production.</dd>
+        <dt>Secteur tertiaire</dt><dd>Services : commerce, banque, transport, santé, éducation…</dd>
+        <dt>Code APE (NAF)</dt><dd>Code attribué par l'Insee qui indique l'activité principale (par exemple 47.11 pour un supermarché).</dd>
+        <dt>Taille</dt><dd>TPE : moins de 10 salariés. PME : moins de 250. ETI : moins de 5 000. Grande entreprise : 5 000 et plus.</dd>
+        <dt>Chiffre d'affaires</dt><dd>Total des ventes sur une année. Ce n'est pas le bénéfice.</dd>
+        <dt>Bénéfice</dt><dd>Ce qui reste quand on retire toutes les charges du chiffre d'affaires.</dd>
+        <dt>Modèle économique</dt><dd>La façon dont l'organisation gagne de l'argent ou se finance.</dd>
+        <dt>Concurrent</dt><dd>Organisation qui propose une offre comparable aux mêmes clients.</dd>
+        <dt>Partenaire</dt><dd>Organisation avec qui elle travaille : fournisseur, banque, sous-traitant, collectivité…</dd>
+        <dt>Organigramme</dt><dd>Schéma qui montre les services et qui dépend de qui.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ÉVALUATION ========== -->
+<section class="panel" id="evaluation" role="tabpanel" hidden>
+  <div class="panel-head">
+    <p class="eyebrow">Note sur 20 · rapport /5 · oral /15</p>
+    <h2>Évaluation</h2>
+    <p class="goal">Ce sont les grilles que le jury utilisera. Sélectionne ton niveau pour chaque critère : ton score estimé se calcule tout seul.</p>
+  </div>
+  <div class="stack-lg">
+    <div class="score" aria-live="polite">
+      <div class="s"><p class="sub">Rapport</p><b id="sc-r">–</b> <span>/5</span></div>
+      <div class="s"><p class="sub">Oral</p><b id="sc-o">–</b> <span>/15</span></div>
+      <div class="s"><p class="sub">Total estimé</p><b id="sc-t">–</b> <span>/20</span></div>
+    </div>
+
+    <div class="stack">
+      <h3>Grille du rapport · /5</h3>
+      <div class="tbl-wrap"><table class="grid-eval" id="grid-r"></table></div>
+    </div>
+    <div class="stack">
+      <h3>Grille de l'oral · /15</h3>
+      <div class="tbl-wrap"><table class="grid-eval" id="grid-o"></table></div>
+    </div>
+    <p class="tip">Niveaux : insuffisant = 25 % des points du critère, fragile = 50 %, satisfaisant = 75 %, très satisfaisant = 100 %. Un critère absent vaut 0.</p>
+    <div class="row"><button class="btn ghost" id="copy-score" type="button">Copier mon autoévaluation</button><button class="btn ghost" id="reset-score" type="button">Effacer mes choix</button><span class="copied" id="score-msg" aria-live="polite"></span></div>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+  var store = {
+    get:function(k){try{return localStorage.getItem('rs1stmg:'+k)}catch(e){return null}},
+    set:function(k,v){try{localStorage.setItem('rs1stmg:'+k,v)}catch(e){}},
+    del:function(k){try{localStorage.removeItem('rs1stmg:'+k)}catch(e){}}
+  };
+
+  /* ---------- parcours ---------- */
+  function setTrack(t){
+    document.body.dataset.track=t;
+    document.getElementById(t==='rech'?'tr-rech':'tr-stage').checked=true;
+    store.set('track',t); renderTrame(); updatePct();
+  }
+  document.querySelectorAll('input[name="track"]').forEach(function(r){
+    r.addEventListener('change',function(){ if(r.checked) setTrack(r.value) });
+  });
+
+  /* ---------- onglets ---------- */
+  var tabs=[].slice.call(document.querySelectorAll('nav.tabs button'));
+  function show(id){
+    if(!document.getElementById(id)) id='demarrer';
+    tabs.forEach(function(b){b.setAttribute('aria-selected', b.dataset.tab===id?'true':'false')});
+    document.querySelectorAll('section.panel').forEach(function(s){s.hidden = s.id!==id});
+    store.set('tab',id);
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){
+    show(b.dataset.tab);
+    try{history.replaceState(null,'','#'+b.dataset.tab)}catch(e){}
+    window.scrollTo({top:document.querySelector('nav.tabs').offsetTop,behavior:'instant'});
+  })});
+
+  /* ---------- cases à cocher ---------- */
+  var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-key]'));
+  boxes.forEach(function(c){
+    c.checked = store.get('c:'+c.dataset.key)==='1';
+    c.addEventListener('change',function(){ c.checked?store.set('c:'+c.dataset.key,'1'):store.del('c:'+c.dataset.key); updatePct(); });
+  });
+  function visible(el){ var t=document.body.dataset.track; return !(t==='stage'&&el.closest('.only-rech')) && !(t==='rech'&&el.closest('.only-stage')); }
+  function updatePct(){
+    ['j1','j2','j3'].forEach(function(d){
+      var list=boxes.filter(function(c){return c.dataset.key.indexOf(d+'-')===0 && visible(c.closest('label'))});
+      var done=list.filter(function(c){return c.checked}).length;
+      var el=document.querySelector('[data-pct="'+d+'"]');
+      el.textContent = done? (done===list.length?'✓':done+'/'+list.length) : '';
+    });
+  }
+
+  /* ---------- trame ---------- */
+  function renderTrame(){
+    var st = document.body.dataset.track!=='rech';
+    var t = [
+      (st?'RAPPORT DE STAGE':'ÉTUDE D\'ENTREPRISE')+' — Prénom NOM — 1STMG_',
+      'Organisation : … | '+(st?'Dates du stage : … | Tuteur : … (fonction)':'Période de recherche : … | Contact éventuel : …'),
+      '',
+      '— RECTO —',
+      '',
+      '1. L\'organisation en bref',
+      '[Tableau : nom, création, adresse, statut juridique, finalité, secteur et code APE, taille, chiffre d\'affaires, zone d\'action, dirigeant]',
+      '',
+      '2. Ce qu\'elle fait et comment elle fonctionne',
+      '[8 à 10 lignes : activité, clients, deux concurrents, partenaires, comment elle gagne de l\'argent. Organigramme simplifié.]',
+      '',
+      st?'3. Ce que j\'ai fait et observé':'3. Un service à la loupe',
+      st?'[10 à 12 lignes : deux ou trois moments marquants de ton stage, avec qui, quels outils, ce que tu as compris.]'
+        :'[10 à 12 lignes : une équipe ou un service de l\'entreprise (accueil, vente, logistique…), qui y travaille, ce qu\'ils font, avec quels outils.]',
+      '',
+      '— VERSO —',
+      '',
+      '4. Un métier à la loupe',
+      '[10 lignes : intitulé, missions, compétences, outils, formation après le bac, parcours de la personne, ce qui t\'attire ou non.]',
+      '',
+      '5. Ce que je retiens',
+      '[10 lignes : 3 apprentissages, chacun illustré par un exemple concret.]',
+      '',
+      '6. Et pour mon orientation ?',
+      '[5 à 6 lignes : enseignement spécifique envisagé en terminale, idées pour après le bac, et ce que '+(st?'ce stage':'cette enquête')+' a changé.]',
+      '',
+      'Sources : '+(st?'[site de l\'organisation, convention, échanges avec le tuteur…]':'[au moins 5 sources : titre + lien]')
+    ];
+    document.getElementById('trame').textContent=t.join('\n');
+  }
+  function copyText(txt,msgEl,ok){
+    function fallback(){
+      var pre=document.getElementById('trame'); var r=document.createRange(); r.selectNodeContents(pre);
+      var s=getSelection(); s.removeAllRanges(); s.addRange(r);
+      msgEl.textContent='Sélectionné : fais Ctrl+C (ou Copier sur téléphone).';
+    }
+    try{ navigator.clipboard.writeText(txt).then(function(){msgEl.textContent=ok},fallback) }catch(e){ fallback() }
+  }
+  document.getElementById('copy-trame').addEventListener('click',function(){
+    copyText(document.getElementById('trame').textContent, document.getElementById('copy-msg'), 'Trame copiée. Colle-la dans ton document.');
+  });
+
+  /* ---------- chronomètre ---------- */
+  var phases=[[0,30,'Accroche et annonce du plan'],[30,90,'L\'organisation'],[90,180,'Ce que j\'ai vécu ou découvert'],[180,240,'Un métier'],[240,300,'Bilan et orientation']];
+  var bar=document.getElementById('bar'), ph=document.getElementById('phases');
+  phases.forEach(function(p,i){
+    var seg=document.createElement('i'); seg.style.width=((p[1]-p[0])/300*100)+'%'; bar.appendChild(seg);
+    var t=document.createElement('span'); t.className='t'; t.textContent=fmt(p[0])+' – '+fmt(p[1]);
+    var n=document.createElement('span'); n.textContent=p[2]; n.dataset.i=i;
+    ph.appendChild(t); ph.appendChild(n);
+  });
+  var fill=document.createElement('i'); fill.className='fill'; bar.appendChild(fill);
+  function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+  var t0=0, acc=0, run=false, iv=null;
+  function tick(){
+    var s=acc+(run?(Date.now()-t0)/1000:0);
+    document.getElementById('clock').textContent=fmt(s);
+    fill.style.width=Math.min(100,s/300*100)+'%';
+    var cur=-1; phases.forEach(function(p,i){ if(s>=p[0]&&s<p[1]) cur=i });
+    ph.querySelectorAll('[data-i]').forEach(function(n){n.classList.toggle('on',+n.dataset.i===cur)});
+    var msg=document.getElementById('phase-now');
+    if(s===0) msg.textContent='Prêt ? Lance le chrono et commence par ton accroche.';
+    else if(cur>=0) msg.textContent='En ce moment : '+phases[cur][2];
+    else msg.textContent='5 minutes atteintes : conclus maintenant.';
+  }
+  document.getElementById('t-start').addEventListener('click',function(){
+    if(run){acc+=(Date.now()-t0)/1000;run=false;clearInterval(iv);this.textContent='Reprendre'}
+    else{t0=Date.now();run=true;iv=setInterval(tick,250);this.textContent='Pause'}
+    tick();
+  });
+  document.getElementById('t-reset').addEventListener('click',function(){
+    run=false;clearInterval(iv);acc=0;document.getElementById('t-start').textContent='Démarrer';tick();
+  });
+
+  /* ---------- grilles ---------- */
+  var LV=['Insuffisant','Fragile','Satisfaisant','Très satisfaisant'], F=[.25,.5,.75,1];
+  var GR=[
+    ['r1','Présentation de l\'organisation',1,['Informations rares ou fausses','Carte d\'identité incomplète','Carte d\'identité complète','Complète, exacte et sourcée']],
+    ['r2','Activités vécues ou fonctionnement observé, et métier présenté',1,['Très général, sans exemple','Quelques faits sans analyse','Exemples précis','Exemples précis et bien expliqués']],
+    ['r3','Bilan personnel et lien avec l\'orientation',1.5,['Absent ou banal','Ressenti sans exemple','Apprentissages illustrés','Réflexion personnelle, argumentée, projet clair']],
+    ['r4','Respect du format et structure',1,['Format non respecté','Format respecté, structure floue','6 parties claires, recto-verso','Mise en page soignée, visuel utile, sources']],
+    ['r5','Qualité de la langue',.5,['Nombreuses fautes, style oral','Fautes gênantes','Quelques fautes','Expression claire et précise']]
+  ];
+  var GO=[
+    ['o1','Structure de l\'exposé et gestion du temps',2,['Pas de plan, moins de 2 min','Plan peu visible, temps mal géré','Plan annoncé, 4 à 5 min','Plan clair et équilibré, 5 min tenues']],
+    ['o2','Contenu : précision sur l\'organisation et le métier',3,['Erreurs, propos vagues','Informations justes mais pauvres','Informations précises','Précis, maîtrisé, exemples bien choisis']],
+    ['o3','Prise de recul personnelle',3,['Récit sans analyse','Ressenti général','Apprentissages identifiés','Réflexion personnelle reliée à son projet']],
+    ['o4','Expression orale sans support',3,['Lecture ou récitation, inaudible','Hésitant, regard fuyant','Voix claire, regard présent','Aisance, débit maîtrisé, vocabulaire précis']],
+    ['o5','Échange avec le jury',4,['Ne répond pas ou hors sujet','Réponses courtes, sans exemple','Répond avec des exemples','Écoute, argumente, rebondit']]
+  ];
+  function build(tblId,rows){
+    var tb=document.getElementById(tblId), h='<tr><th>Critère</th>'+LV.map(function(l){return'<th>'+l+'</th>'}).join('')+'</tr>';
+    rows.forEach(function(r){
+      h+='<tr><td class="crit"><b>'+r[1]+'</b><br><small>'+String(r[2]).replace('.',',')+' pt'+(r[2]>1?'s':'')+'</small></td>';
+      r[3].forEach(function(d,i){
+        var id=r[0]+'-'+i;
+        h+='<td><label class="lvl" for="'+id+'"><input type="radio" name="'+r[0]+'" id="'+id+'" value="'+i+'"><span>'+d+'</span></label></td>';
+      });
+      h+='</tr>';
+    });
+    tb.innerHTML=h;
+  }
+  build('grid-r',GR); build('grid-o',GO);
+  function sum(rows){
+    var any=false, s=0;
+    rows.forEach(function(r){ var v=store.get('g:'+r[0]); if(v!==null){any=true; s+=r[2]*F[+v]} });
+    return any? Math.round(s*4)/4 : null;
+  }
+  function f(n){return n===null?'–':String(n).replace('.',',')}
+  function score(){
+    var a=sum(GR), b=sum(GO);
+    document.getElementById('sc-r').textContent=f(a);
+    document.getElementById('sc-o').textContent=f(b);
+    document.getElementById('sc-t').textContent=(a===null&&b===null)?'–':f((a||0)+(b||0));
+  }
+  GR.concat(GO).forEach(function(r){
+    var v=store.get('g:'+r[0]); if(v!==null){var el=document.getElementById(r[0]+'-'+v); if(el) el.checked=true}
+    document.querySelectorAll('input[name="'+r[0]+'"]').forEach(function(i){
+      i.addEventListener('change',function(){store.set('g:'+r[0],i.value);score()});
+    });
+  });
+  document.getElementById('reset-score').addEventListener('click',function(){
+    GR.concat(GO).forEach(function(r){store.del('g:'+r[0]); document.querySelectorAll('input[name="'+r[0]+'"]').forEach(function(i){i.checked=false})});
+    score(); document.getElementById('score-msg').textContent='Choix effacés.';
+  });
+  document.getElementById('copy-score').addEventListener('click',function(){
+    var lines=['Mon autoévaluation'];
+    [['Rapport',GR],['Oral',GO]].forEach(function(g){
+      lines.push(''); lines.push(g[0]+' : '+f(sum(g[1]))+(g[0]==='Rapport'?' / 5':' / 15'));
+      g[1].forEach(function(r){var v=store.get('g:'+r[0]); lines.push('- '+r[1]+' : '+(v===null?'non évalué':LV[+v]))});
+    });
+    lines.push(''); lines.push('Total estimé : '+document.getElementById('sc-t').textContent+' / 20');
+    var msg=document.getElementById('score-msg');
+    try{navigator.clipboard.writeText(lines.join('\n')).then(function(){msg.textContent='Autoévaluation copiée.'},function(){msg.textContent='Copie impossible : recopie ton score à la main.'})}catch(e){msg.textContent='Copie impossible : recopie ton score à la main.'}
+  });
+
+  /* ---------- init ---------- */
+  setTrack(store.get('track')==='rech'?'rech':'stage');
+  var h=(location.hash||'').replace('#','');
+  show(document.getElementById(h)?h:(store.get('tab')||'demarrer'));
+  score(); tick(); updatePct();
+})();
+</script>
+
+</body>
+</html>
